@@ -1,0 +1,55 @@
+[
+  {
+    "id": 1,
+    "title": "Демо-видео о технологиях",
+    "author": "ТехноПоток",
+    "authorSubs": "1,2 млн подписчиков",
+    "category": "Технологии",
+    "views": 128400,
+    "likes": 5400,
+    "createdAt": 1700000000000,
+    "date": "2 дня назад",
+    "duration": "12:45",
+    "description": "Это демонстрационный ролик. В polished-версии можно загружать локальные mp4 и смотреть их через встроенный видеоплеер.",
+    "thumbnail": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80",
+    "videoUrl": "https://www.w3schools.com/html/mov_bbb.mp4",
+    "comments": [
+      {
+        "id": 1001,
+        "user": "Антон",
+        "avatarType": "text",
+        "avatar": "А",
+        "text": "Очень крутая подача!",
+        "time": "3 часа назад",
+        "likes": 18,
+        "replies": [
+          {
+            "id": 1002,
+            "user": "Марина",
+            "avatarType": "text",
+            "avatar": "М",
+            "text": "Согласна, видео отличное.",
+            "time": "1 час назад",
+            "likes": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Музыкальный микс для работы и отдыха",
+    "author": "Музыка Нон-Стоп",
+    "authorSubs": "845 тыс подписчиков",
+    "category": "Музыка",
+    "views": 892000,
+    "likes": 15000,
+    "createdAt": 1699000000000,
+    "date": "5 дней назад",
+    "duration": "35:10",
+    "description": "Подборка расслабляющей музыки для концентрации, творчества и вечернего отдыха.",
+    "thumbnail": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1200&q=80",
+    "videoUrl": "https://www.w3schools.com/html/movie.mp4",
+    "comments": []
+  }
+]

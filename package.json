@@ -1,0 +1,15 @@
+{
+  "name": "iltube",
+  "version": "1.0.0",
+  "description": "ИльТьюб — русская видеоплатформа",
+  "main": "SERVER/server.js",
+  "scripts": {
+    "start": "node SERVER/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

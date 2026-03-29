@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ИльТьюб — polished edition</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Вставляю исходные стили ИльТьюб -->
   <style>
     :root{
       --bg:#0f0f10;
@@ -28,22 +26,2784 @@
       --header-h:60px;
       --sidebar-w:250px;
     }
-    /* ... (остальные стили такие же, как в исходном файле) ... */
-    body.light{ --bg:#ffffff; --bg-soft:#f7f7fa; --panel:#ffffff; --panel-2:#f2f3f7; --panel-3:#e9ecf3; --border:#dde1ea; --text:#15161a; --muted:#6b7280; --accent:#ff3b5c; --accent-2:#7c3aed; --blue:#2563eb; --green:#16a34a; --danger:#dc2626; --warning:#d97706; --shadow:0 12px 28px rgba(24,39,75,.08); }
-    *{box-sizing:border-box;margin:0;padding:0} html,body{height:100%} body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);overflow:hidden;} img,video{display:block;max-width:100%} button,input,textarea,select{font:inherit}
-    .app{display:grid;grid-template-columns:var(--sidebar-w) 1fr;grid-template-rows:var(--header-h) 1fr;grid-template-areas:"header header""sidebar main";height:100vh;}
-    .header{grid-area:header;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 16px;border-bottom:1px solid var(--border);background:color-mix(in srgb, var(--bg) 86%, transparent);backdrop-filter:blur(12px);position:sticky;top:0;z-index:40;}
-    /* ... (вставьте остальной CSS из исходного кода) ... */
+
+    body.light{
+      --bg:#ffffff;
+      --bg-soft:#f7f7fa;
+      --panel:#ffffff;
+      --panel-2:#f2f3f7;
+      --panel-3:#e9ecf3;
+      --border:#dde1ea;
+      --text:#15161a;
+      --muted:#6b7280;
+      --accent:#ff3b5c;
+      --accent-2:#7c3aed;
+      --blue:#2563eb;
+      --green:#16a34a;
+      --danger:#dc2626;
+      --warning:#d97706;
+      --shadow:0 12px 28px rgba(24,39,75,.08);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      overflow:hidden;
+    }
+
+    img,video{display:block;max-width:100%}
+    button,input,textarea,select{font:inherit}
+
+    .app{
+      display:grid;
+      grid-template-columns:var(--sidebar-w) 1fr;
+      grid-template-rows:var(--header-h) 1fr;
+      grid-template-areas:
+        "header header"
+        "sidebar main";
+      height:100vh;
+    }
+
+    .header{
+      grid-area:header;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:0 16px;
+      border-bottom:1px solid var(--border);
+      background:color-mix(in srgb, var(--bg) 86%, transparent);
+      backdrop-filter:blur(12px);
+      position:sticky;
+      top:0;
+      z-index:40;
+    }
+
+    .header-left,.header-right{display:flex;align-items:center;gap:12px}
+    .header-center{flex:1;display:flex;justify-content:center;min-width:0}
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      cursor:pointer;
+      user-select:none;
+    }
+
+    .logo-mark{
+      width:44px;
+      height:30px;
+      border-radius:10px;
+      background:linear-gradient(135deg,var(--accent),#ff6f8a 55%,var(--accent-2));
+      position:relative;
+      box-shadow:0 12px 28px rgba(255,59,92,.25);
+      overflow:hidden;
+    }
+    .logo-mark::before{
+      content:"";
+      position:absolute;
+      left:17px;
+      top:8px;
+      width:0;height:0;
+      border-left:12px solid #fff;
+      border-top:7px solid transparent;
+      border-bottom:7px solid transparent;
+    }
+    .logo-mark::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg,rgba(255,255,255,.18),transparent 40%);
+    }
+    .logo-texts{display:flex;flex-direction:column;line-height:1}
+    .logo-title{
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+    .logo-sub{
+      font-size:11px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      margin-top:3px;
+    }
+
+    .icon-btn,.burger,.close-btn{
+      width:40px;height:40px;
+      border:none;
+      border-radius:50%;
+      background:transparent;
+      color:var(--text);
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      transition:.2s ease;
+    }
+    .icon-btn:hover,.burger:hover,.close-btn:hover{
+      background:var(--panel-2);
+    }
+
+    .search-wrap{
+      width:min(760px,100%);
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .search-box{
+      flex:1;
+      display:flex;
+      align-items:center;
+      min-width:0;
+    }
+    .search-box input{
+      flex:1;
+      min-width:0;
+      height:42px;
+      border:1px solid var(--border);
+      border-right:none;
+      border-radius:999px 0 0 999px;
+      background:var(--panel);
+      color:var(--text);
+      padding:0 16px;
+      outline:none;
+    }
+    .search-btn{
+      height:42px;
+      min-width:64px;
+      border:1px solid var(--border);
+      border-radius:0 999px 999px 0;
+      background:var(--panel-2);
+      color:var(--text);
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .search-btn:hover{background:var(--panel-3)}
+
+    .btn{
+      border:none;
+      border-radius:999px;
+      padding:10px 14px;
+      background:var(--panel-2);
+      color:var(--text);
+      cursor:pointer;
+      transition:.2s ease;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .btn:hover{background:var(--panel-3)}
+    .btn-primary{background:var(--blue);color:#fff}
+    .btn-red{background:var(--danger);color:#fff}
+    .btn-green{background:var(--green);color:#fff}
+    .btn-warning{background:var(--warning);color:#111}
+
+    .avatar{
+      width:38px;height:38px;
+      border-radius:50%;
+      overflow:hidden;
+      background:linear-gradient(135deg,#60a5fa,#7c3aed);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      font-weight:700;
+      flex-shrink:0;
+      box-shadow:var(--shadow);
+    }
+    .avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .sidebar{
+      grid-area:sidebar;
+      border-right:1px solid var(--border);
+      background:var(--bg);
+      overflow:auto;
+      padding:12px 8px;
+    }
+    .nav-section{
+      padding-bottom:12px;
+      margin-bottom:12px;
+      border-bottom:1px solid var(--border);
+    }
+    .nav-title{
+      margin:8px 12px;
+      color:var(--muted);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+    }
+    .nav-item{
+      width:100%;
+      border:none;
+      background:transparent;
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:11px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      text-align:left;
+      transition:.2s ease;
+    }
+    .nav-item:hover,.nav-item.active{
+      background:var(--panel-2);
+    }
+
+    .main{
+      grid-area:main;
+      overflow:auto;
+      padding:20px 24px;
+      background:
+        radial-gradient(circle at right top, rgba(124,58,237,.08), transparent 24%),
+        radial-gradient(circle at left top, rgba(59,130,246,.06), transparent 22%),
+        var(--bg);
+    }
+
+    .view{display:none}
+    .view.active{
+      display:block;
+      animation:fade .2s ease;
+    }
+    @keyframes fade{
+      from{opacity:0;transform:translateY(4px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .page-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+    .page-title{
+      font-size:28px;
+      margin-bottom:8px;
+    }
+    .page-subtitle{color:var(--muted)}
+    .toolbar,.row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .chips{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+    .chip{
+      border:none;
+      border-radius:999px;
+      padding:9px 14px;
+      background:var(--panel-2);
+      color:var(--text);
+      cursor:pointer;
+    }
+    .chip.active,.chip:hover{
+      background:var(--text);
+      color:var(--bg);
+    }
+
+    .video-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+      gap:18px;
+    }
+
+    .video-card{
+      border:none;
+      background:transparent;
+      color:inherit;
+      text-align:left;
+      cursor:pointer;
+    }
+    .video-thumb{
+      width:100%;
+      aspect-ratio:16/9;
+      border-radius:16px;
+      overflow:hidden;
+      background:var(--panel);
+      border:1px solid var(--border);
+      position:relative;
+      box-shadow:var(--shadow);
+    }
+    .video-thumb img,.video-thumb video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      background:#000;
+    }
+    .duration{
+      position:absolute;
+      right:8px;
+      bottom:8px;
+      padding:4px 7px;
+      font-size:12px;
+      color:#fff;
+      background:rgba(0,0,0,.8);
+      border-radius:8px;
+    }
+    .video-info{
+      display:flex;
+      gap:12px;
+      padding-top:12px;
+    }
+    .video-title{
+      font-size:16px;
+      font-weight:700;
+      line-height:1.35;
+      margin-bottom:4px;
+    }
+    .meta{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.45;
+    }
+
+    .watch-layout{
+      display:grid;
+      grid-template-columns:minmax(0,1.7fr) 380px;
+      gap:24px;
+      align-items:start;
+    }
+    .player{
+      width:100%;
+      aspect-ratio:16/9;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:#000;
+      box-shadow:var(--shadow);
+    }
+    .watch-title{
+      font-size:22px;
+      line-height:1.35;
+      margin:14px 0 12px;
+    }
+    .watch-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    .channel-row{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .channel-row h3{
+      font-size:16px;
+      margin-bottom:4px;
+      cursor:pointer;
+    }
+
+    .description-box,.panel{
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:16px;
+      box-shadow:var(--shadow);
+    }
+    .description-box{
+      white-space:pre-wrap;
+      line-height:1.65;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .pill{
+      border:none;
+      border-radius:999px;
+      padding:10px 14px;
+      background:var(--panel-2);
+      color:var(--text);
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .pill:hover{background:var(--panel-3)}
+
+    .section-title{
+      margin:22px 0 12px;
+      font-size:20px;
+    }
+
+    .comment-form{
+      display:flex;
+      gap:12px;
+      margin-bottom:14px;
+    }
+    .comment-form textarea{
+      width:100%;
+      min-height:56px;
+      resize:vertical;
+      border:none;
+      border-bottom:1px solid var(--border);
+      background:transparent;
+      color:var(--text);
+      outline:none;
+      padding:10px 0;
+    }
+
+    .comments{
+      display:grid;
+      gap:14px;
+    }
+    .comment{
+      display:flex;
+      gap:12px;
+      padding:12px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:var(--panel);
+    }
+    .comment-text{
+      line-height:1.6;
+      margin:4px 0 8px;
+    }
+    .mini{
+      border:none;
+      background:transparent;
+      color:var(--muted);
+      cursor:pointer;
+      margin-right:12px;
+    }
+    .mini:hover{color:var(--text)}
+    .replies{
+      margin-top:10px;
+      display:grid;
+      gap:10px;
+      padding-left:16px;
+      border-left:2px solid var(--border);
+    }
+
+    .recommend-list{
+      display:grid;
+      gap:12px;
+    }
+    .recommend-card{
+      display:grid;
+      grid-template-columns:168px 1fr;
+      gap:10px;
+      border:none;
+      background:transparent;
+      color:inherit;
+      text-align:left;
+      cursor:pointer;
+    }
+    .recommend-thumb{
+      aspect-ratio:16/9;
+      border-radius:12px;
+      overflow:hidden;
+      background:var(--panel-2);
+      border:1px solid var(--border);
+    }
+    .recommend-thumb img,.recommend-thumb video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      background:#000;
+    }
+
+    .form-grid{
+      display:grid;
+      gap:14px;
+      max-width:920px;
+    }
+    .field label{
+      display:block;
+      margin-bottom:7px;
+      font-weight:700;
+    }
+    .field input,.field textarea,.field select{
+      width:100%;
+      background:var(--bg);
+      color:var(--text);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px 14px;
+      outline:none;
+    }
+    .field textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+    .hint{
+      margin-top:6px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .upload-preview{
+      display:grid;
+      grid-template-columns:320px 1fr;
+      gap:16px;
+      align-items:start;
+      margin-top:6px;
+    }
+    .preview-thumb{
+      border-radius:16px;
+      overflow:hidden;
+      aspect-ratio:16/9;
+      background:var(--panel-2);
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+    }
+    .preview-thumb img,.preview-thumb video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      background:#000;
+    }
+
+    .profile-grid{
+      display:grid;
+      grid-template-columns:320px 1fr;
+      gap:20px;
+    }
+    .profile-card{text-align:center}
+    .profile-avatar{
+      width:96px;height:96px;
+      border-radius:50%;
+      margin:0 auto 12px;
+      overflow:hidden;
+      background:linear-gradient(135deg,#38bdf8,#8b5cf6);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:34px;
+      font-weight:800;
+      color:#fff;
+    }
+    .profile-avatar img{
+      width:100%;height:100%;object-fit:cover;
+    }
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:16px;
+    }
+    .stat{
+      background:var(--bg);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px;
+    }
+    .stat b{
+      display:block;
+      font-size:20px;
+      margin-bottom:4px;
+    }
+
+    .list{
+      display:grid;
+      gap:12px;
+    }
+    .list-item{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      padding:12px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:var(--bg);
+    }
+
+    .channel-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      padding:18px;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:var(--panel);
+      margin-bottom:18px;
+      box-shadow:var(--shadow);
+    }
+    .channel-main{
+      display:flex;
+      align-items:center;
+      gap:16px;
+    }
+    .channel-avatar{
+      width:84px;height:84px;
+      border-radius:50%;
+      overflow:hidden;
+      background:linear-gradient(135deg,#22c55e,#2563eb);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      font-weight:800;
+      color:#fff;
+    }
+    .channel-avatar img{width:100%;height:100%;object-fit:cover}
+
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .settings-grid,.admin-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    .playlist-card{
+      border:1px solid var(--border);
+      background:var(--bg);
+      border-radius:18px;
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      box-shadow:var(--shadow);
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      background:var(--panel-2);
+      color:var(--text);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:12px;
+    }
+
+    .setting-item{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding:12px 0;
+      border-bottom:1px solid var(--border);
+    }
+
+    .switch{
+      position:relative;
+      width:52px;
+      height:30px;
+      flex-shrink:0;
+    }
+    .switch input{display:none}
+    .slider{
+      position:absolute;
+      inset:0;
+      border-radius:999px;
+      background:var(--panel-3);
+      cursor:pointer;
+    }
+    .slider::before{
+      content:"";
+      position:absolute;
+      width:22px;height:22px;
+      left:4px;top:4px;
+      border-radius:50%;
+      background:#fff;
+      transition:.2s ease;
+    }
+    .switch input:checked + .slider{
+      background:var(--blue);
+    }
+    .switch input:checked + .slider::before{
+      transform:translateX(22px);
+    }
+
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,.65);
+      z-index:100;
+      padding:16px;
+    }
+    .modal.show{display:flex}
+    .modal-box{
+      width:min(680px,100%);
+      max-height:90vh;
+      overflow:auto;
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:20px;
+      box-shadow:var(--shadow);
+    }
+    .modal-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:16px;
+    }
+
+    .notice{
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      max-width:340px;
+      background:#111827;
+      color:#fff;
+      padding:14px 16px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:var(--shadow);
+      opacity:0;
+      transform:translateY(10px);
+      pointer-events:none;
+      transition:.25s ease;
+      z-index:120;
+    }
+    .notice.show{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .mobile-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.55);
+      z-index:60;
+    }
+    .mobile-overlay.show{display:block}
+    .empty{
+      text-align:center;
+      color:var(--muted);
+      padding:24px 10px;
+    }
+
+    .icon{
+      width:18px;height:18px;display:inline-block;flex-shrink:0;
+    }
+    .icon svg{
+      width:100%;height:100%;
+      stroke:currentColor;
+      fill:none;
+      stroke-width:2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    @media (max-width:1200px){
+      .watch-layout{grid-template-columns:1fr}
+      .profile-grid,.settings-grid,.admin-grid{grid-template-columns:1fr}
+    }
+
+    @media (max-width:900px){
+      .app{
+        grid-template-columns:1fr;
+        grid-template-areas:
+          "header"
+          "main";
+      }
+      .sidebar{
+        position:fixed;
+        left:0;top:var(--header-h);bottom:0;
+        width:min(84vw,300px);
+        transform:translateX(-100%);
+        transition:.25s ease;
+        z-index:80;
+      }
+      .sidebar.open{transform:translateX(0)}
+    }
+
+    @media (max-width:700px){
+      .header{
+        flex-wrap:wrap;
+        min-height:var(--header-h);
+        height:auto;
+        padding:8px 10px;
+      }
+      .header-center{
+        order:3;
+        width:100%;
+      }
+      .search-wrap{width:100%}
+      .main{padding:16px}
+      .video-grid{grid-template-columns:1fr}
+      .recommend-card{grid-template-columns:130px 1fr}
+      .stats,.grid-2,.grid-3,.upload-preview{grid-template-columns:1fr}
+      .channel-main{align-items:flex-start}
+    }
   </style>
 </head>
 <body>
-    <div class="app">
-        <!-- Весь HTML из предоставленного файла -->
+  <div class="app">
+    <header class="header">
+      <div class="header-left">
+        <button class="burger" id="burgerBtn" aria-label="Меню">
+          <span class="icon">
+            <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </span>
+        </button>
+
+        <div class="logo" onclick="goHome()">
+          <div class="logo-mark"></div>
+          <div class="logo-texts">
+            <div class="logo-title">ИльТьюб</div>
+            <div class="logo-sub">русская видеоплатформа</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <div class="search-wrap">
+          <div class="search-box">
+            <input id="searchInput" type="text" placeholder="Поиск видео, каналов, плейлистов" />
+            <button class="search-btn" onclick="performSearch()" aria-label="Поиск">
+              <span class="icon">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+              </span>
+            </button>
+          </div>
+
+          <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Сменить тему">
+            <span class="icon">
+              <svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <button class="btn" onclick="showView('upload')">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+          Создать
+        </button>
+        <button class="btn btn-primary" onclick="openAuthModal()" id="authHeaderBtn">Войти</button>
+        <div class="avatar" id="topAvatar">Г</div>
+      </div>
+    </header>
+
+    <aside class="sidebar" id="sidebar">
+      <div class="nav-section">
+        <button class="nav-item active" data-view="home" onclick="showView('home', this)">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg></span>
+          Главная
+        </button>
+        <button class="nav-item" data-view="trending" onclick="showView('trending', this); renderTrending()">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M13 3l-2 7h5l-5 11 2-8H8l5-10z"/></svg></span>
+          В тренде
+        </button>
+        <button class="nav-item" data-view="subscriptions" onclick="showView('subscriptions', this); renderSubscriptionsFeed()">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 7h18v10H3z"/><path d="M10 10l5 2-5 2z"/></svg></span>
+          Подписки
+        </button>
+        <button class="nav-item" data-view="history" onclick="showView('history', this); renderHistory()">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 3v6h6"/><path d="M12 7v5l3 2"/></svg></span>
+          История
+        </button>
+        <button class="nav-item" data-view="favorites" onclick="showView('favorites', this); renderFavorites()">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 17.3l-6.2 3.7 1.7-7.1L2 8.9l7.2-.6L12 1.8l2.8 6.5 7.2.6-5.5 5 1.7 7.1z"/></svg></span>
+          Избранное
+        </button>
+        <button class="nav-item" data-view="playlists" onclick="showView('playlists', this); renderPlaylists()">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M4 6h10M4 12h10M4 18h6"/><path d="M17 14v6M14 17h6"/></svg></span>
+          Плейлисты
+        </button>
+        <button class="nav-item" data-view="upload" onclick="showView('upload', this); loadDraftIntoForm()">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 16V4"/><path d="M8 8l4-4 4 4"/><path d="M4 20h16"/></svg></span>
+          Загрузка
+        </button>
+        <button class="nav-item" data-view="profile" onclick="showView('profile', this)">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="8" r="4"/></svg></span>
+          Профиль
+        </button>
+        <button class="nav-item" data-view="stats" onclick="showView('stats', this); renderChannelStats()">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20v-11"/></svg></span>
+          Статистика канала
+        </button>
+        <button class="nav-item" data-view="settings" onclick="showView('settings', this); renderSettings()">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="4"/></svg></span>
+          Настройки
+        </button>
+        <button class="nav-item" id="adminNavBtn" style="display:none;" data-view="admin" onclick="showView('admin', this); renderAdmin()">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 3l7 4v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V7l7-4z"/><path d="M9.5 12.5l1.8 1.8 3.7-4.3"/></svg></span>
+          Админ-панель
+        </button>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-title">Категории</div>
+        <button class="nav-item" onclick="filterByCategory('Все')">Все</button>
+        <button class="nav-item" onclick="filterByCategory('Музыка')">Музыка</button>
+        <button class="nav-item" onclick="filterByCategory('Игры')">Игры</button>
+        <button class="nav-item" onclick="filterByCategory('Технологии')">Технологии</button>
+        <button class="nav-item" onclick="filterByCategory('Путешествия')">Путешествия</button>
+        <button class="nav-item" onclick="filterByCategory('Обучение')">Обучение</button>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-title">Аккаунт</div>
+        <button class="nav-item" onclick="openAuthModal()">Войти / Регистрация</button>
+        <button class="nav-item" onclick="openEditProfileModal()">Редактировать профиль</button>
+        <button class="nav-item" onclick="logout()">Выйти</button>
+      </div>
+    </aside>
+
+    <div class="mobile-overlay" id="mobileOverlay" onclick="closeSidebar()"></div>
+
+    <main class="main">
+      <section class="view active" id="view-home">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Главная</h1>
+            <p class="page-subtitle">ИльТьюб — русская видеоплатформа</p>
+          </div>
+          <div class="toolbar">
+            <select id="sortSelectHome" class="btn" onchange="renderHomeVideos()">
+              <option value="new">Сначала новые</option>
+              <option value="views">По просмотрам</option>
+              <option value="likes">По лайкам</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="chips">
+          <button class="chip active" onclick="filterByCategory('Все', this)">Все</button>
+          <button class="chip" onclick="filterByCategory('Музыка', this)">Музыка</button>
+          <button class="chip" onclick="filterByCategory('Игры', this)">Игры</button>
+          <button class="chip" onclick="filterByCategory('Технологии', this)">Технологии</button>
+          <button class="chip" onclick="filterByCategory('Путешествия', this)">Путешествия</button>
+          <button class="chip" onclick="filterByCategory('Обучение', this)">Обучение</button>
+        </div>
+
+        <div class="video-grid" id="videoGrid"></div>
+      </section>
+
+      <section class="view" id="view-watch">
+        <div class="watch-layout">
+          <div>
+            <video id="videoPlayer" class="player" controls playsinline></video>
+            <h2 class="watch-title" id="watchTitle">Название</h2>
+
+            <div class="watch-row">
+              <div class="channel-row">
+                <div class="avatar" id="watchAvatar">A</div>
+                <div>
+                  <h3 id="watchAuthor" onclick="openCurrentChannel()">Автор</h3>
+                  <div class="meta" id="watchMeta">0 подписчиков</div>
+                </div>
+                <button class="btn btn-red" onclick="subscribeCurrent()">Подписаться</button>
+                <button class="btn" onclick="openCurrentChannel()">Открыть канал</button>
+              </div>
+
+              <div class="actions">
+                <button class="pill" id="likeBtn" onclick="likeCurrentVideo()"></button>
+                <button class="pill" id="favoriteBtn" onclick="toggleFavoriteCurrent()"></button>
+                <button class="pill" onclick="openAddToPlaylistModal()">В плейлист</button>
+                <button class="pill" onclick="showNotice('Ссылка скопирована!')">Поделиться</button>
+              </div>
+            </div>
+
+            <div class="description-box" id="watchDescription"></div>
+
+            <h3 class="section-title">Комментарии</h3>
+            <div class="comment-form">
+              <div class="avatar" id="commentAvatar">Г</div>
+              <div style="flex:1;">
+                <textarea id="commentInput" placeholder="Оставьте комментарий"></textarea>
+                <div style="display:flex; justify-content:flex-end; margin-top:8px;">
+                  <button class="btn btn-primary" onclick="addComment()">Отправить</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="comments" id="commentsList"></div>
+          </div>
+
+          <aside class="panel">
+            <h3 style="margin-bottom:12px;">Рекомендации</h3>
+            <div class="recommend-list" id="recommendList"></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="view" id="view-upload">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Загрузка видео</h1>
+            <p class="page-subtitle">Загрузите своё видео на платформу</p>
+          </div>
+          <div class="toolbar">
+            <button class="btn" onclick="clearDraft()">Очистить черновик</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <form class="form-grid" onsubmit="submitUpload(event)">
+            <div class="field">
+              <label for="uploadTitle">Название</label>
+              <input id="uploadTitle" type="text" required placeholder="Введите название видео" />
+            </div>
+
+            <div class="field">
+              <label for="uploadAuthor">Название канала</label>
+              <input id="uploadAuthor" type="text" required placeholder="Введите название канала" />
+            </div>
+
+            <div class="field">
+              <label for="uploadCategory">Категория</label>
+              <select id="uploadCategory">
+                <option>Музыка</option>
+                <option>Игры</option>
+                <option>Технологии</option>
+                <option>Путешествия</option>
+                <option>Обучение</option>
+                <option>Развлечения</option>
+              </select>
+            </div>
+
+            <div class="grid-2">
+              <div class="field">
+                <label for="uploadThumb">Ссылка на превью</label>
+                <input id="uploadThumb" type="url" placeholder="https://..." />
+              </div>
+              <div class="field">
+                <label for="uploadVideoUrl">Ссылка на видео</label>
+                <input id="uploadVideoUrl" type="url" placeholder="https://example.com/video.mp4" />
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="field">
+                <label for="uploadLocalVideo">Локальный видеофайл</label>
+                <input id="uploadLocalVideo" type="file" accept="video/mp4,video/webm,video/ogg" />
+              </div>
+              <div class="field">
+                <label for="uploadLocalThumb">Локальная картинка-превью</label>
+                <input id="uploadLocalThumb" type="file" accept="image/*" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="uploadDescription">Описание</label>
+              <textarea id="uploadDescription" required placeholder="Введите описание"></textarea>
+            </div>
+
+            <div class="panel" style="padding:14px;">
+              <h3 style="margin-bottom:12px;">Live-превью</h3>
+              <div class="upload-preview">
+                <div class="preview-thumb" id="previewMediaWrap"></div>
+                <div>
+                  <div class="video-title" id="uploadPreviewTitle">Название вашего видео</div>
+                  <div class="meta" id="uploadPreviewAuthor">Название канала</div>
+                  <div class="meta" id="uploadPreviewMeta">0 просмотров • только что</div>
+                  <div class="meta" id="uploadPreviewCategory">Категория: Музыка</div>
+                  <div style="margin-top:10px; line-height:1.6;" id="uploadPreviewDescription">Описание видео появится здесь.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <button class="btn btn-primary" type="submit">Опубликовать</button>
+              <button class="btn" type="button" onclick="fillDemoUpload()">Заполнить примером</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="view" id="view-profile">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Профиль</h1>
+            <p class="page-subtitle">Ваш аккаунт, видео и активность.</p>
+          </div>
+        </div>
+
+        <div class="profile-grid">
+          <div class="panel profile-card">
+            <div class="profile-avatar" id="profileAvatar">Г</div>
+            <h2 id="profileName">Гость</h2>
+            <div class="meta" id="profileLogin">@guest</div>
+
+            <div class="stats">
+              <div class="stat"><b id="statVideos">0</b><span>Видео</span></div>
+              <div class="stat"><b id="statLikes">0</b><span>Лайков</span></div>
+              <div class="stat"><b id="statSubs">0</b><span>Подписок</span></div>
+            </div>
+
+            <div class="row" style="justify-content:center; margin-top:16px;">
+              <button class="btn btn-primary" onclick="openEditProfileModal()">Редактировать</button>
+              <button class="btn" onclick="showView('playlists'); renderPlaylists()">Плейлисты</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="page-head" style="margin-bottom:12px;">
+              <h3>Мои видео</h3>
+            </div>
+            <div class="list" id="myVideosList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-subscriptions">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Подписки</h1>
+            <p class="page-subtitle">Лента только по тем каналам, на которые вы подписаны.</p>
+          </div>
+          <div class="toolbar">
+            <select id="subscriptionsSort" class="btn" onchange="renderSubscriptionsFeed()">
+              <option value="new">Сначала новые</option>
+              <option value="views">По просмотрам</option>
+              <option value="likes">По лайкам</option>
+            </select>
+          </div>
+        </div>
+        <div class="video-grid" id="subscriptionsFeedGrid"></div>
+      </section>
+
+      <section class="view" id="view-history">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">История просмотров</h1>
+            <p class="page-subtitle">Видео, которые вы недавно открывали.</p>
+          </div>
+          <div class="toolbar">
+            <button class="btn btn-red" onclick="clearHistory()">Очистить историю</button>
+          </div>
+        </div>
+        <div class="video-grid" id="historyGrid"></div>
+      </section>
+
+      <section class="view" id="view-favorites">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Избранное</h1>
+            <p class="page-subtitle">Ваши сохранённые любимые видео.</p>
+          </div>
+        </div>
+        <div class="video-grid" id="favoritesGrid"></div>
+      </section>
+
+      <section class="view" id="view-playlists">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Плейлисты</h1>
+            <p class="page-subtitle">Создавайте свои подборки видео.</p>
+          </div>
+          <div class="toolbar">
+            <button class="btn btn-primary" onclick="openCreatePlaylistModal()">Новый плейлист</button>
+          </div>
+        </div>
+        <div class="grid-3" id="playlistsGrid"></div>
+      </section>
+
+      <section class="view" id="view-channel">
+        <div class="channel-header">
+          <div class="channel-main">
+            <div class="channel-avatar" id="channelAvatar">К</div>
+            <div>
+              <h2 id="channelName">Название канала</h2>
+              <div class="meta" id="channelInfo">@channel • 0 видео</div>
+            </div>
+          </div>
+          <div class="row">
+            <button class="btn btn-red" id="channelSubscribeBtn" onclick="subscribeChannelPage()">Подписаться</button>
+          </div>
+        </div>
+        <div class="video-grid" id="channelVideosGrid"></div>
+      </section>
+
+      <section class="view" id="view-trending">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">В тренде</h1>
+            <p class="page-subtitle">Самые популярные видео</p>
+          </div>
+          <div class="toolbar">
+            <select id="trendingSort" class="btn" onchange="renderTrending()">
+              <option value="views">По просмотрам</option>
+              <option value="likes">По лайкам</option>
+              <option value="new">Сначала новые</option>
+            </select>
+          </div>
+        </div>
+        <div class="video-grid" id="trendingGrid"></div>
+      </section>
+
+      <section class="view" id="view-stats">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Статистика канала</h1>
+            <p class="page-subtitle">Общая статистика ваших видео.</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="stats" style="margin-top:0;">
+            <div class="stat"><b id="channelStatVideos">0</b><span>Всего видео</span></div>
+            <div class="stat"><b id="channelStatViews">0</b><span>Сумма просмотров</span></div>
+            <div class="stat"><b id="channelStatLikes">0</b><span>Сумма лайков</span></div>
+          </div>
+          <h3 style="margin:20px 0 12px;">Топ видео канала</h3>
+          <div class="list" id="channelStatsTopList"></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-settings">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Настройки</h1>
+            <p class="page-subtitle">Управление внешним видом и аккаунтом</p>
+          </div>
+        </div>
+        <div class="settings-grid">
+          <div class="panel">
+            <h3 style="margin-bottom:14px;">Внешний вид</h3>
+            <div class="setting-item">
+              <div>
+                <div style="font-weight:700;">Светлая тема</div>
+                <div class="meta">Включить светлую цветовую схему</div>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="themeSwitch" onchange="toggleThemeFromSettings()">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+          <div class="panel">
+            <h3 style="margin-bottom:14px;">Аккаунт</h3>
+            <div class="setting-item">
+              <div>
+                <div style="font-weight:700;">Редактировать профиль</div>
+                <div class="meta">Изменить имя, логин, пароль</div>
+              </div>
+              <button class="btn" onclick="openEditProfileModal()">Открыть</button>
+            </div>
+            <div class="setting-item">
+              <div>
+                <div style="font-weight:700;">Выйти из аккаунта</div>
+                <div class="meta">Завершить текущую сессию</div>
+              </div>
+              <button class="btn" onclick="logout()">Выйти</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-admin">
+        <div class="page-head">
+          <div>
+            <h1 class="page-title">Админ-панель</h1>
+            <p class="page-subtitle">Управление платформой</p>
+          </div>
+        </div>
+        <div class="admin-grid">
+          <div class="panel">
+            <h3 style="margin-bottom:14px;">Общая статистика</h3>
+            <div class="stats" style="margin-top:0;">
+              <div class="stat"><b id="adminVideosCount">0</b><span>Видео</span></div>
+              <div class="stat"><b id="adminUsersCount">0</b><span>Пользователи</span></div>
+              <div class="stat"><b id="adminCommentsCount">0</b><span>Комментарии</span></div>
+            </div>
+          </div>
+          <div class="panel">
+            <h3 style="margin-bottom:14px;">Быстрые действия</h3>
+            <div class="row">
+              <button class="btn btn-red" onclick="adminClearAllVideos()">Удалить все видео</button>
+              <button class="btn btn-warning" onclick="adminClearAllComments()">Удалить все комментарии</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:18px;">
+          <h3 style="margin-bottom:14px;">Все видео платформы</h3>
+          <div class="list" id="adminVideosList"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Модальные окна -->
+  <div class="modal" id="authModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2>Вход / Регистрация</h2>
+        <button class="close-btn" onclick="closeAuthModal()">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></span>
+        </button>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label for="authName">Имя</label>
+          <input id="authName" type="text" placeholder="Например: Илья" />
+        </div>
+        <div class="field">
+          <label for="authLogin">Логин</label>
+          <input id="authLogin" type="text" placeholder="@ilya" />
+        </div>
+        <div class="field">
+          <label for="authPassword">Пароль</label>
+          <input id="authPassword" type="password" placeholder="Введите пароль" />
+        </div>
+        <div class="row">
+          <button class="btn btn-primary" onclick="registerUser()">Зарегистрироваться</button>
+          <button class="btn" onclick="loginUser()">Войти</button>
+        </div>
+      </div>
     </div>
-    <!-- Скрипты из исходного файла -->
-    <script src="CLIENT/functions.js"></script>
-    <script>
-        // Вся логика из <script> предоставленного файла
-    </script>
+  </div>
+
+  <div class="modal" id="editProfileModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2>Редактирование профиля</h2>
+        <button class="close-btn" onclick="closeEditProfileModal()">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></span>
+        </button>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label for="editName">Имя</label>
+          <input id="editName" type="text" placeholder="Новое имя" />
+        </div>
+        <div class="field">
+          <label for="editLogin">Логин</label>
+          <input id="editLogin" type="text" placeholder="@new_login" />
+        </div>
+        <div class="field">
+          <label for="editPassword">Новый пароль</label>
+          <input id="editPassword" type="password" placeholder="Оставьте пустым, если не менять" />
+        </div>
+        <div class="field">
+          <label for="editAvatarFile">Аватарка</label>
+          <input id="editAvatarFile" type="file" accept="image/*" />
+        </div>
+        <div class="row">
+          <button class="btn btn-primary" onclick="saveProfileChanges()">Сохранить</button>
+          <button class="btn" onclick="closeEditProfileModal()">Отмена</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="editVideoModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2>Редактирование видео</h2>
+        <button class="close-btn" onclick="closeEditVideoModal()">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></span>
+        </button>
+      </div>
+      <div class="form-grid">
+        <input type="hidden" id="editVideoId" />
+        <div class="field">
+          <label for="editVideoTitle">Название</label>
+          <input id="editVideoTitle" type="text" />
+        </div>
+        <div class="field">
+          <label for="editVideoCategory">Категория</label>
+          <select id="editVideoCategory">
+            <option>Музыка</option>
+            <option>Игры</option>
+            <option>Технологии</option>
+            <option>Путешествия</option>
+            <option>Обучение</option>
+            <option>Развлечения</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="editVideoThumb">Превью</label>
+          <input id="editVideoThumb" type="url" />
+        </div>
+        <div class="field">
+          <label for="editVideoUrl">Ссылка на видео</label>
+          <input id="editVideoUrl" type="url" />
+        </div>
+        <div class="field">
+          <label for="editVideoDescription">Описание</label>
+          <textarea id="editVideoDescription"></textarea>
+        </div>
+        <div class="row">
+          <button class="btn btn-primary" onclick="saveVideoChanges()">Сохранить</button>
+          <button class="btn" onclick="closeEditVideoModal()">Отмена</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="createPlaylistModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2>Создать плейлист</h2>
+        <button class="close-btn" onclick="closeCreatePlaylistModal()">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></span>
+        </button>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label for="playlistName">Название плейлиста</label>
+          <input id="playlistName" type="text" placeholder="Например: Любимые видео" />
+        </div>
+        <div class="field">
+          <label for="playlistDescription">Описание</label>
+          <textarea id="playlistDescription" placeholder="Описание плейлиста"></textarea>
+        </div>
+        <div class="row">
+          <button class="btn btn-primary" onclick="createPlaylist()">Создать</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="addToPlaylistModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2>Добавить в плейлист</h2>
+        <button class="close-btn" onclick="closeAddToPlaylistModal()">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></span>
+        </button>
+      </div>
+      <div id="addToPlaylistList" class="list"></div>
+    </div>
+  </div>
+
+  <div class="notice" id="notice"></div>
+
+  <script>
+    const STORAGE_KEYS = {
+      videos: "iltube_videos",
+      user: "iltube_user",
+      authUsers: "iltube_auth_users",
+      theme: "iltube_theme",
+      playlists: "iltube_playlists",
+      history: "iltube_history",
+      favorites: "iltube_favorites",
+      draft: "iltube_upload_draft"
+    };
+
+    const DEFAULT_VIDEO_1 = "https://www.w3schools.com/html/mov_bbb.mp4";
+    const DEFAULT_VIDEO_2 = "https://www.w3schools.com/html/movie.mp4";
+    const DEFAULT_THUMB = "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80";
+
+    const defaultVideos = [
+      {
+        id: 1,
+        title: "Демо-видео о технологиях",
+        author: "ТехноПоток",
+        authorSubs: "1,2 млн подписчиков",
+        category: "Технологии",
+        views: 128400,
+        likes: 5400,
+        createdAt: Date.now() - 100000000,
+        date: "2 дня назад",
+        duration: "12:45",
+        description: "Это демонстрационный ролик для ИльТьюб.",
+        thumbnail: DEFAULT_THUMB,
+        videoUrl: DEFAULT_VIDEO_1,
+        comments: [
+          {
+            id: 1001,
+            user: "Антон",
+            avatarType: "text",
+            avatar: "А",
+            text: "Очень крутая подача!",
+            time: "3 часа назад",
+            likes: 18,
+            replies: []
+          }
+        ]
+      },
+      {
+        id: 2,
+        title: "Музыкальный микс для работы",
+        author: "Музыка Нон-Стоп",
+        authorSubs: "845 тыс подписчиков",
+        category: "Музыка",
+        views: 892000,
+        likes: 15000,
+        createdAt: Date.now() - 200000000,
+        date: "5 дней назад",
+        duration: "35:10",
+        description: "Подборка расслабляющей музыки.",
+        thumbnail: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1200&q=80",
+        videoUrl: DEFAULT_VIDEO_2,
+        comments: []
+      }
+    ];
+
+    let videos = [];
+    let playlists = [];
+    let historyList = [];
+    let favorites = [];
+    let currentVideoId = null;
+    let currentFilter = "Все";
+    let currentSearch = "";
+    let currentChannelName = "";
+    let activeReplyCommentId = null;
+
+    let currentUser = {
+      name: "Гость",
+      login: "@guest",
+      avatar: "Г",
+      avatarType: "text",
+      password: "",
+      loggedIn: false,
+      subscriptions: [],
+      likedVideos: []
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    function saveVideos(){ localStorage.setItem(STORAGE_KEYS.videos, JSON.stringify(videos)); }
+    function saveCurrentUser(){ localStorage.setItem(STORAGE_KEYS.user, JSON.stringify(currentUser)); }
+    function savePlaylists(){ localStorage.setItem(STORAGE_KEYS.playlists, JSON.stringify(playlists)); }
+    function saveHistory(){ localStorage.setItem(STORAGE_KEYS.history, JSON.stringify(historyList)); }
+    function saveFavorites(){ localStorage.setItem(STORAGE_KEYS.favorites, JSON.stringify(favorites)); }
+    function saveDraft(data){ localStorage.setItem(STORAGE_KEYS.draft, JSON.stringify(data)); }
+
+    function loadData(){
+      const storedVideos = localStorage.getItem(STORAGE_KEYS.videos);
+      videos = storedVideos ? JSON.parse(storedVideos) : [...defaultVideos];
+      if(!storedVideos) saveVideos();
+
+      const storedUser = localStorage.getItem(STORAGE_KEYS.user);
+      currentUser = storedUser ? JSON.parse(storedUser) : { ...currentUser };
+      if(!storedUser) saveCurrentUser();
+
+      const storedPlaylists = localStorage.getItem(STORAGE_KEYS.playlists);
+      playlists = storedPlaylists ? JSON.parse(storedPlaylists) : [];
+      if(!storedPlaylists) savePlaylists();
+
+      const storedHistory = localStorage.getItem(STORAGE_KEYS.history);
+      historyList = storedHistory ? JSON.parse(storedHistory) : [];
+      if(!storedHistory) saveHistory();
+
+      const storedFavorites = localStorage.getItem(STORAGE_KEYS.favorites);
+      favorites = storedFavorites ? JSON.parse(storedFavorites) : [];
+      if(!storedFavorites) saveFavorites();
+
+      let users = JSON.parse(localStorage.getItem(STORAGE_KEYS.authUsers) || "[]");
+      if(!users.some(u => u.login === "admin")){
+        users.push({
+          name: "Администратор",
+          login: "admin",
+          password: "admin",
+          avatar: "A",
+          avatarType: "text",
+          loggedIn: false,
+          subscriptions: [],
+          likedVideos: []
+        });
+        localStorage.setItem(STORAGE_KEYS.authUsers, JSON.stringify(users));
+      }
+
+      applyTheme(localStorage.getItem(STORAGE_KEYS.theme) || "dark");
+    }
+
+    function getAuthUsers(){
+      return JSON.parse(localStorage.getItem(STORAGE_KEYS.authUsers) || "[]");
+    }
+
+    function setAuthUsers(users){
+      localStorage.setItem(STORAGE_KEYS.authUsers, JSON.stringify(users));
+    }
+
+    function persistCurrentUserToAuthList(){
+      if(!currentUser.loggedIn) return;
+      const users = getAuthUsers().map(u => u.login === currentUser.login ? { ...currentUser } : u);
+      setAuthUsers(users);
+    }
+
+    function escapeHtml(str){
+      return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+    }
+
+    function jsEscape(str){
+      return String(str).replace(/\\/g,"\\\\").replace(/'/g,"\\'");
+    }
+
+    function getInitials(name){
+      return (name || "?").trim().charAt(0).toUpperCase();
+    }
+
+    function formatViews(num){
+      if(num >= 1000000) return (num / 1000000).toFixed(1).replace(".0","") + " млн просмотров";
+      if(num >= 1000) return (num / 1000).toFixed(1).replace(".0","") + " тыс просмотров";
+      return num + " просмотров";
+    }
+
+    function randomThumb(){
+      const thumbs = [
+        DEFAULT_THUMB,
+        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80"
+      ];
+      return thumbs[Math.floor(Math.random() * thumbs.length)];
+    }
+
+    function sortVideos(list, mode){
+      const arr = [...list];
+      if(mode === "views") return arr.sort((a,b) => b.views - a.views);
+      if(mode === "likes") return arr.sort((a,b) => b.likes - a.likes);
+      return arr.sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0));
+    }
+
+    function avatarHTML(userObj){
+      if(userObj?.avatarType === "image" && userObj?.avatar){
+        return `<img src="${userObj.avatar}" alt="avatar">`;
+      }
+      return escapeHtml(userObj?.avatar || getInitials(userObj?.name || userObj?.user || "?"));
+    }
+
+    function getVideoMediaHTML(video){
+      return video.thumbnail
+        ? `<img src="${video.thumbnail}" alt="${escapeHtml(video.title)}">`
+        : `<video muted preload="metadata" src="${video.videoUrl}"></video>`;
+    }
+
+    function getVideoCard(video){
+      return `
+        <button class="video-card" onclick="openVideo(${video.id})">
+          <div class="video-thumb">
+            ${getVideoMediaHTML(video)}
+            <div class="duration">${video.duration || "Видео"}</div>
+          </div>
+          <div class="video-info">
+            <div class="avatar">${avatarHTML({avatarType:"text",avatar:getInitials(video.author),name:video.author})}</div>
+            <div>
+              <div class="video-title">${escapeHtml(video.title)}</div>
+              <div class="meta" onclick="event.stopPropagation(); openChannel('${jsEscape(video.author)}')">${escapeHtml(video.author)}</div>
+              <div class="meta">${formatViews(video.views)} • ${video.date}</div>
+            </div>
+          </div>
+        </button>
+      `;
+    }
+
+    function renderHomeVideos(){
+      let filtered = [...videos];
+      if(currentFilter !== "Все"){
+        filtered = filtered.filter(v => v.category === currentFilter);
+      }
+      if(currentSearch.trim()){
+        const q = currentSearch.toLowerCase();
+        filtered = filtered.filter(v =>
+          v.title.toLowerCase().includes(q) ||
+          v.author.toLowerCase().includes(q) ||
+          v.category.toLowerCase().includes(q)
+        );
+      }
+      filtered = sortVideos(filtered, $("sortSelectHome").value);
+      $("videoGrid").innerHTML = filtered.length
+        ? filtered.map(getVideoCard).join("")
+        : `<div class="panel" style="grid-column:1/-1;"><div class="empty">Ничего не найдено.</div></div>`;
+    }
+
+    function addToHistory(id){
+      historyList = historyList.filter(vId => vId !== id);
+      historyList.unshift(id);
+      historyList = historyList.slice(0, 50);
+      saveHistory();
+    }
+
+    function openVideo(id){
+      const video = videos.find(v => v.id === id);
+      if(!video) return;
+
+      currentVideoId = id;
+      video.views++;
+      addToHistory(id);
+      saveVideos();
+
+      const player = $("videoPlayer");
+      player.pause();
+      player.src = video.videoUrl || "";
+      player.poster = video.thumbnail || "";
+      player.load();
+
+      $("watchTitle").textContent = video.title;
+      $("watchAuthor").textContent = video.author;
+      $("watchMeta").textContent = `${video.authorSubs} • ${formatViews(video.views)} • ${video.date}`;
+      $("watchDescription").textContent = video.description;
+      $("watchAvatar").innerHTML = avatarHTML({avatarType:"text",avatar:getInitials(video.author),name:video.author});
+
+      updateLikeButton();
+      updateFavoriteButton();
+      renderComments();
+      renderRecommendations(id);
+      renderHomeVideos();
+      showView("watch");
+    }
+
+    function renderRecommendations(excludeId){
+      const recs = sortVideos(videos.filter(v => v.id !== excludeId), "views").slice(0, 6);
+      $("recommendList").innerHTML = recs.map(video => `
+        <button class="recommend-card" onclick="openVideo(${video.id})">
+          <div class="recommend-thumb">${getVideoMediaHTML(video)}</div>
+          <div>
+            <div style="font-weight:700; line-height:1.35; margin-bottom:4px;">${escapeHtml(video.title)}</div>
+            <div class="meta">${escapeHtml(video.author)}</div>
+            <div class="meta">${formatViews(video.views)}</div>
+          </div>
+        </button>
+      `).join("");
+    }
+
+    function openCurrentChannel(){
+      const video = videos.find(v => v.id === currentVideoId);
+      if(video) openChannel(video.author);
+    }
+
+    function openChannel(name){
+      currentChannelName = name;
+      const channelVideos = videos.filter(v => v.author === name);
+      const totalViews = channelVideos.reduce((sum, v) => sum + (v.views || 0), 0);
+
+      $("channelAvatar").innerHTML = avatarHTML({avatarType:"text",avatar:getInitials(name),name});
+      $("channelName").textContent = name;
+      $("channelInfo").textContent = `@${name.toLowerCase().replace(/\s+/g, "_")} • ${channelVideos.length} видео • ${formatViews(totalViews)}`;
+      $("channelSubscribeBtn").textContent = currentUser.subscriptions.includes(name) ? "Отписаться" : "Подписаться";
+
+      $("channelVideosGrid").innerHTML = channelVideos.length
+        ? sortVideos(channelVideos, "new").map(getVideoCard).join("")
+        : `<div class="panel" style="grid-column:1/-1;"><div class="empty">У этого канала пока нет видео.</div></div>`;
+
+      showView("channel");
+    }
+
+    function subscribeChannelPage(){
+      if(currentChannelName) toggleSubscription(currentChannelName);
+      openChannel(currentChannelName);
+    }
+
+    function renderTrending(){
+      const list = sortVideos(videos, $("trendingSort").value).slice(0, 12);
+      $("trendingGrid").innerHTML = list.length
+        ? list.map(getVideoCard).join("")
+        : `<div class="panel"><div class="empty">Нет видео.</div></div>`;
+    }
+
+    function renderSubscriptionsFeed(){
+      if(!currentUser.loggedIn){
+        $("subscriptionsFeedGrid").innerHTML = `<div class="panel" style="grid-column:1/-1;"><div class="empty">Войдите в аккаунт.</div></div>`;
+        return;
+      }
+      const list = sortVideos(
+        videos.filter(v => currentUser.subscriptions.includes(v.author)),
+        $("subscriptionsSort").value
+      );
+      $("subscriptionsFeedGrid").innerHTML = list.length
+        ? list.map(getVideoCard).join("")
+        : `<div class="panel" style="grid-column:1/-1;"><div class="empty">У вас пока нет подписок.</div></div>`;
+    }
+
+    function renderHistory(){
+      const list = historyList.map(id => videos.find(v => v.id === id)).filter(Boolean);
+      $("historyGrid").innerHTML = list.length
+        ? list.map(getVideoCard).join("")
+        : `<div class="panel" style="grid-column:1/-1;"><div class="empty">История пуста.</div></div>`;
+    }
+
+    function clearHistory(){
+      if(!confirm("Очистить историю?")) return;
+      historyList = [];
+      saveHistory();
+      renderHistory();
+      showNotice("История очищена.");
+    }
+
+    function renderFavorites(){
+      const list = favorites.map(id => videos.find(v => v.id === id)).filter(Boolean);
+      $("favoritesGrid").innerHTML = list.length
+        ? list.map(getVideoCard).join("")
+        : `<div class="panel" style="grid-column:1/-1;"><div class="empty">В избранном пусто.</div></div>`;
+    }
+
+    function updateFavoriteButton(){
+      $("favoriteBtn").textContent = favorites.includes(currentVideoId) ? "В избранном" : "В избранное";
+    }
+
+    function toggleFavoriteCurrent(){
+      if(!currentVideoId) return;
+      if(favorites.includes(currentVideoId)){
+        favorites = favorites.filter(id => id !== currentVideoId);
+        showNotice("Удалено из избранного.");
+      }else{
+        favorites.unshift(currentVideoId);
+        showNotice("Добавлено в избранное.");
+      }
+      saveFavorites();
+      updateFavoriteButton();
+      renderFavorites();
+    }
+
+    function updateLikeButton(){
+      const video = videos.find(v => v.id === currentVideoId);
+      if(!video) return;
+      $("likeBtn").textContent = `${currentUser.likedVideos.includes(video.id) ? "Лайк" : "Нравится"} • ${video.likes}`;
+    }
+
+    function likeCurrentVideo(){
+      if(!currentUser.loggedIn){
+        showNotice("Сначала войдите.");
+        openAuthModal();
+        return;
+      }
+      const video = videos.find(v => v.id === currentVideoId);
+      if(!video) return;
+
+      if(currentUser.likedVideos.includes(video.id)){
+        currentUser.likedVideos = currentUser.likedVideos.filter(id => id !== video.id);
+        video.likes = Math.max(0, video.likes - 1);
+        showNotice("Лайк убран.");
+      }else{
+        currentUser.likedVideos.push(video.id);
+        video.likes++;
+        showNotice("Лайк поставлен.");
+      }
+      persistCurrentUserToAuthList();
+      saveCurrentUser();
+      saveVideos();
+      updateLikeButton();
+      renderProfile();
+    }
+
+    function toggleSubscription(channelName){
+      if(!currentUser.loggedIn){
+        showNotice("Сначала войдите.");
+        openAuthModal();
+        return;
+      }
+      if(currentUser.subscriptions.includes(channelName)){
+        currentUser.subscriptions = currentUser.subscriptions.filter(name => name !== channelName);
+        showNotice(`Отписались от «${channelName}».`);
+      }else{
+        currentUser.subscriptions.push(channelName);
+        showNotice(`Подписались на «${channelName}».`);
+      }
+      persistCurrentUserToAuthList();
+      saveCurrentUser();
+      renderSubscriptionsFeed();
+      renderProfile();
+    }
+
+    function subscribeCurrent(){
+      const video = videos.find(v => v.id === currentVideoId);
+      if(video) toggleSubscription(video.author);
+    }
+
+    function renderComments(){
+      const video = videos.find(v => v.id === currentVideoId);
+      if(!video) return;
+      $("commentsList").innerHTML = !video.comments.length
+        ? `<div class="empty">Пока нет комментариев.</div>`
+        : video.comments.map(comment => `
+          <div class="comment">
+            <div class="avatar">${avatarHTML(comment)}</div>
+            <div style="flex:1;">
+              <div class="meta"><b style="color:var(--text)">${escapeHtml(comment.user)}</b> • ${escapeHtml(comment.time)}</div>
+              <div class="comment-text">${escapeHtml(comment.text)}</div>
+              <div>
+                <button class="mini" onclick="likeComment(${comment.id})">👍 ${comment.likes || 0}</button>
+                <button class="mini" onclick="toggleReplyForm(${comment.id})">Ответить</button>
+              </div>
+              ${activeReplyCommentId === comment.id ? `
+                <div style="margin-top:10px;">
+                  <textarea id="replyInput-${comment.id}" style="width:100%;min-height:70px;background:transparent;color:var(--text);border:1px solid var(--border);border-radius:10px;padding:10px;" placeholder="Напишите ответ..."></textarea>
+                  <div class="row" style="margin-top:8px;">
+                    <button class="btn btn-primary" onclick="addReply(${comment.id})">Отправить</button>
+                  </div>
+                </div>
+              ` : ""}
+              <div class="replies">
+                ${(comment.replies || []).map(reply => `
+                  <div class="comment" style="padding:10px;">
+                    <div class="avatar">${avatarHTML(reply)}</div>
+                    <div>
+                      <div class="meta"><b style="color:var(--text)">${escapeHtml(reply.user)}</b> • ${escapeHtml(reply.time)}</div>
+                      <div class="comment-text">${escapeHtml(reply.text)}</div>
+                      <div><button class="mini" onclick="likeReply(${comment.id}, ${reply.id})">👍 ${reply.likes || 0}</button></div>
+                    </div>
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+          </div>
+        `).join("");
+    }
+
+    function addComment(){
+      if(!currentUser.loggedIn){
+        showNotice("Сначала войдите.");
+        openAuthModal();
+        return;
+      }
+      const text = $("commentInput").value.trim();
+      if(!text){
+        showNotice("Введите комментарий.");
+        return;
+      }
+      const video = videos.find(v => v.id === currentVideoId);
+      if(!video) return;
+
+      video.comments.unshift({
+        id: Date.now(),
+        user: currentUser.name,
+        avatarType: currentUser.avatarType || "text",
+        avatar: currentUser.avatar,
+        text,
+        time: "только что",
+        likes: 0,
+        replies: []
+      });
+
+      $("commentInput").value = "";
+      saveVideos();
+      renderComments();
+      showNotice("Комментарий добавлен.");
+    }
+
+    function toggleReplyForm(commentId){
+      activeReplyCommentId = activeReplyCommentId === commentId ? null : commentId;
+      renderComments();
+    }
+
+    function addReply(commentId){
+      if(!currentUser.loggedIn){
+        showNotice("Сначала войдите.");
+        return;
+      }
+      const video = videos.find(v => v.id === currentVideoId);
+      if(!video) return;
+      const comment = video.comments.find(c => c.id === commentId);
+      if(!comment) return;
+
+      const input = $(`replyInput-${commentId}`);
+      if(!input) return;
+      const text = input.value.trim();
+      if(!text){
+        showNotice("Введите ответ.");
+        return;
+      }
+
+      comment.replies.push({
+        id: Date.now() + Math.floor(Math.random() * 999),
+        user: currentUser.name,
+        avatarType: currentUser.avatarType || "text",
+        avatar: currentUser.avatar,
+        text,
+        time: "только что",
+        likes: 0
+      });
+
+      activeReplyCommentId = null;
+      saveVideos();
+      renderComments();
+      showNotice("Ответ добавлен.");
+    }
+
+    function likeComment(commentId){
+      const video = videos.find(v => v.id === currentVideoId);
+      if(!video) return;
+      const comment = video.comments.find(c => c.id === commentId);
+      if(!comment) return;
+      comment.likes++;
+      saveVideos();
+      renderComments();
+    }
+
+    function likeReply(commentId, replyId){
+      const video = videos.find(v => v.id === currentVideoId);
+      if(!video) return;
+      const comment = video.comments.find(c => c.id === commentId);
+      if(!comment) return;
+      const reply = (comment.replies || []).find(r => r.id === replyId);
+      if(!reply) return;
+      reply.likes++;
+      saveVideos();
+      renderComments();
+    }
+
+    function draftFromForm(){
+      return {
+        title: $("uploadTitle").value,
+        author: $("uploadAuthor").value,
+        category: $("uploadCategory").value,
+        thumb: $("uploadThumb").value,
+        videoUrl: $("uploadVideoUrl").value,
+        description: $("uploadDescription").value
+      };
+    }
+
+    function saveUploadDraft(){
+      saveDraft(draftFromForm());
+    }
+
+    function loadDraftIntoForm(){
+      const raw = localStorage.getItem(STORAGE_KEYS.draft);
+      const draft = raw ? JSON.parse(raw) : null;
+      $("uploadTitle").value = draft?.title || "";
+      $("uploadAuthor").value = draft?.author || (currentUser.loggedIn ? currentUser.name : "");
+      $("uploadCategory").value = draft?.category || "Музыка";
+      $("uploadThumb").value = draft?.thumb || "";
+      $("uploadVideoUrl").value = draft?.videoUrl || "";
+      $("uploadDescription").value = draft?.description || "";
+      updateUploadPreview();
+    }
+
+    function clearDraft(showMsg = true){
+      localStorage.removeItem(STORAGE_KEYS.draft);
+      $("uploadTitle").value = "";
+      $("uploadAuthor").value = currentUser.loggedIn ? currentUser.name : "";
+      $("uploadCategory").value = "Музыка";
+      $("uploadThumb").value = "";
+      $("uploadVideoUrl").value = "";
+      $("uploadDescription").value = "";
+      $("uploadLocalVideo").value = "";
+      $("uploadLocalThumb").value = "";
+      updateUploadPreview();
+      if(showMsg) showNotice("Черновик очищен.");
+    }
+
+    function updateUploadPreview(){
+      const title = $("uploadTitle")?.value.trim() || "Название вашего видео";
+      const author = $("uploadAuthor")?.value.trim() || "Название канала";
+      const category = $("uploadCategory")?.value || "Музыка";
+      const thumb = $("uploadThumb")?.value.trim();
+      const description = $("uploadDescription")?.value.trim() || "Описание видео появится здесь.";
+      const localVideoFile = $("uploadLocalVideo")?.files[0];
+      const localThumbFile = $("uploadLocalThumb")?.files[0];
+
+      $("uploadPreviewTitle").textContent = title;
+      $("uploadPreviewAuthor").textContent = author;
+      $("uploadPreviewCategory").textContent = "Категория: " + category;
+      $("uploadPreviewDescription").textContent = description;
+      $("uploadPreviewMeta").textContent = "0 просмотров • только что";
+
+      if(localVideoFile){
+        const videoUrl = URL.createObjectURL(localVideoFile);
+        $("previewMediaWrap").innerHTML = `<video src="${videoUrl}" muted controls></video>`;
+      }else{
+        const imgSrc = localThumbFile
+          ? URL.createObjectURL(localThumbFile)
+          : (thumb || DEFAULT_THUMB);
+        $("previewMediaWrap").innerHTML = `<img src="${imgSrc}" alt="Превью">`;
+      }
+    }
+
+    function submitUpload(event){
+      event.preventDefault();
+
+      if(!currentUser.loggedIn){
+        showNotice("Сначала войдите.");
+        openAuthModal();
+        return;
+      }
+
+      const title = $("uploadTitle").value.trim();
+      const author = $("uploadAuthor").value.trim() || currentUser.name;
+      const category = $("uploadCategory").value;
+      const remoteThumb = $("uploadThumb").value.trim();
+      const remoteVideoUrl = $("uploadVideoUrl").value.trim();
+      const description = $("uploadDescription").value.trim();
+      const localVideoFile = $("uploadLocalVideo").files[0];
+      const localThumbFile = $("uploadLocalThumb").files[0];
+
+      if(!title || !description){
+        showNotice("Заполните обязательные поля.");
+        return;
+      }
+
+      let finalVideoUrl = remoteVideoUrl || DEFAULT_VIDEO_1;
+      let finalThumb = remoteThumb || randomThumb();
+      if(localVideoFile) finalVideoUrl = URL.createObjectURL(localVideoFile);
+      if(localThumbFile) finalThumb = URL.createObjectURL(localThumbFile);
+
+      videos.unshift({
+        id: Date.now(),
+        title,
+        author,
+        authorSubs: "Новый канал",
+        category,
+        views: 0,
+        likes: 0,
+        createdAt: Date.now(),
+        date: "только что",
+        duration: localVideoFile ? "Локально" : "Видео",
+        description,
+        thumbnail: finalThumb,
+        videoUrl: finalVideoUrl,
+        comments: []
+      });
+
+      saveVideos();
+      clearDraft(false);
+
+      renderHomeVideos();
+      renderProfile();
+      renderTrending();
+      renderChannelStats();
+      if(currentUser.login === "admin") renderAdmin();
+      showNotice("Видео опубликовано.");
+      showView("home");
+    }
+
+    function fillDemoUpload(){
+      $("uploadTitle").value = "Мой первый ролик на ИльТьюб";
+      $("uploadAuthor").value = currentUser.loggedIn ? currentUser.name : "Новый Канал";
+      $("uploadCategory").value = "Технологии";
+      $("uploadThumb").value = randomThumb();
+      $("uploadVideoUrl").value = DEFAULT_VIDEO_1;
+      $("uploadDescription").value = "Это тестовое описание видео.";
+      saveUploadDraft();
+      updateUploadPreview();
+      showNotice("Поля заполнены.");
+    }
+
+    function renderProfile(){
+      $("profileName").textContent = currentUser.name;
+      $("profileLogin").textContent = currentUser.login;
+      $("profileAvatar").innerHTML = avatarHTML(currentUser);
+      $("topAvatar").innerHTML = avatarHTML(currentUser);
+      $("commentAvatar").innerHTML = avatarHTML(currentUser);
+      $("authHeaderBtn").textContent = currentUser.loggedIn ? currentUser.name : "Войти";
+      $("adminNavBtn").style.display = currentUser.login === "admin" && currentUser.password === "admin" ? "flex" : "none";
+
+      const myVideos = videos.filter(v => v.author === currentUser.name);
+      $("statVideos").textContent = myVideos.length;
+      $("statLikes").textContent = currentUser.likedVideos.length;
+      $("statSubs").textContent = currentUser.subscriptions.length;
+
+      $("myVideosList").innerHTML = myVideos.length
+        ? sortVideos(myVideos, "new").map(video => `
+          <div class="list-item">
+            <div style="display:flex; gap:12px; align-items:center; min-width:0;">
+              <div style="width:120px; border-radius:10px; overflow:hidden; flex-shrink:0;">
+                ${video.thumbnail ? `<img src="${video.thumbnail}" alt="${escapeHtml(video.title)}" style="width:100%; height:68px; object-fit:cover;">` : `<video muted src="${video.videoUrl}" style="width:100%; height:68px; object-fit:cover; background:#000;"></video>`}
+              </div>
+              <div>
+                <div style="font-weight:700; margin-bottom:4px;">${escapeHtml(video.title)}</div>
+                <div class="meta">${video.category} • ${formatViews(video.views)}</div>
+              </div>
+            </div>
+            <div class="row">
+              <button class="btn" onclick="openVideo(${video.id})">Открыть</button>
+              <button class="btn btn-warning" onclick="openEditVideoModal(${video.id})">Редактировать</button>
+              <button class="btn btn-red" onclick="deleteVideo(${video.id})">Удалить</button>
+            </div>
+          </div>
+        `).join("")
+        : `<div class="empty">У вас пока нет видео.</div>`;
+    }
+
+    function deleteVideo(id){
+      if(!currentUser.loggedIn){
+        showNotice("Сначала войдите.");
+        return;
+      }
+      const video = videos.find(v => v.id === id);
+      if(!video){
+        showNotice("Видео не найдено.");
+        return;
+      }
+      if(video.author !== currentUser.name && currentUser.login !== "admin"){
+        showNotice("Можно удалять только свои видео.");
+        return;
+      }
+      if(!confirm(`Удалить видео «${video.title}»?`)) return;
+
+      videos = videos.filter(v => v.id !== id);
+      currentUser.likedVideos = currentUser.likedVideos.filter(vId => vId !== id);
+      playlists.forEach(p => p.videoIds = p.videoIds.filter(vId => vId !== id));
+      historyList = historyList.filter(vId => vId !== id);
+      favorites = favorites.filter(vId => vId !== id);
+
+      saveVideos();
+      savePlaylists();
+      saveHistory();
+      saveFavorites();
+      saveCurrentUser();
+      persistCurrentUserToAuthList();
+
+      if(currentVideoId === id){
+        $("videoPlayer").pause();
+        $("videoPlayer").src = "";
+        currentVideoId = null;
+        showView("home");
+      }
+
+      renderHomeVideos();
+      renderProfile();
+      renderTrending();
+      renderPlaylists();
+      renderHistory();
+      renderFavorites();
+      renderChannelStats();
+      renderAdmin();
+      showNotice("Видео удалено.");
+    }
+
+    function openEditVideoModal(id){
+      if(!currentUser.loggedIn){
+        showNotice("Сначала войдите.");
+        return;
+      }
+      const video = videos.find(v => v.id === id);
+      if(!video) return;
+      if(video.author !== currentUser.name && currentUser.login !== "admin"){
+        showNotice("Можно редактировать только свои видео.");
+        return;
+      }
+      $("editVideoId").value = video.id;
+      $("editVideoTitle").value = video.title;
+      $("editVideoCategory").value = video.category;
+      $("editVideoThumb").value = video.thumbnail || "";
+      $("editVideoUrl").value = video.videoUrl || "";
+      $("editVideoDescription").value = video.description;
+      $("editVideoModal").classList.add("show");
+    }
+
+    function closeEditVideoModal(){
+      $("editVideoModal").classList.remove("show");
+    }
+
+    function saveVideoChanges(){
+      const id = Number($("editVideoId").value);
+      const video = videos.find(v => v.id === id);
+      if(!video) return;
+      video.title = $("editVideoTitle").value.trim();
+      video.category = $("editVideoCategory").value;
+      video.thumbnail = $("editVideoThumb").value.trim() || video.thumbnail || "";
+      video.videoUrl = $("editVideoUrl").value.trim() || video.videoUrl;
+      video.description = $("editVideoDescription").value.trim();
+      saveVideos();
+      closeEditVideoModal();
+      renderHomeVideos();
+      renderProfile();
+      renderTrending();
+      renderAdmin();
+      if(currentVideoId === video.id) openVideo(video.id);
+      showNotice("Видео обновлено.");
+    }
+
+    function renderPlaylists(){
+      if(!currentUser.loggedIn){
+        $("playlistsGrid").innerHTML = `<div class="panel" style="grid-column:1/-1;"><div class="empty">Войдите в аккаунт.</div></div>`;
+        return;
+      }
+      const myPlaylists = playlists.filter(p => p.ownerLogin === currentUser.login);
+      $("playlistsGrid").innerHTML = myPlaylists.length
+        ? myPlaylists.map(pl => {
+          const vids = pl.videoIds.map(id => videos.find(v => v.id === id)).filter(Boolean);
+          return `
+            <div class="playlist-card">
+              <div>
+                <h3 style="margin-bottom:6px;">${escapeHtml(pl.name)}</h3>
+                <div class="meta">${escapeHtml(pl.description || "Без описания")}</div>
+              </div>
+              <div class="badge">${vids.length} видео</div>
+              <div class="list">
+                ${vids.length ? vids.slice(0,3).map(v => `
+                  <div class="list-item">
+                    <div style="font-weight:700;">${escapeHtml(v.title)}</div>
+                    <div class="row">
+                      <button class="btn" onclick="openVideo(${v.id})">Открыть</button>
+                      <button class="btn btn-red" onclick="removeFromPlaylist(${pl.id}, ${v.id})">Убрать</button>
+                    </div>
+                  </div>
+                `).join("") : `<div class="empty">Плейлист пуст.</div>`}
+              </div>
+              <div class="row">
+                <button class="btn btn-red" onclick="deletePlaylist(${pl.id})">Удалить плейлист</button>
+              </div>
+            </div>
+          `;
+        }).join("")
+        : `<div class="panel" style="grid-column:1/-1;"><div class="empty">У вас пока нет плейлистов.</div></div>`;
+    }
+
+    function openCreatePlaylistModal(){
+      if(!currentUser.loggedIn){
+        showNotice("Сначала войдите.");
+        openAuthModal();
+        return;
+      }
+      $("playlistName").value = "";
+      $("playlistDescription").value = "";
+      $("createPlaylistModal").classList.add("show");
+    }
+
+    function closeCreatePlaylistModal(){
+      $("createPlaylistModal").classList.remove("show");
+    }
+
+    function createPlaylist(){
+      const name = $("playlistName").value.trim();
+      const description = $("playlistDescription").value.trim();
+      if(!name){
+        showNotice("Введите название.");
+        return;
+      }
+      playlists.unshift({
+        id: Date.now(),
+        ownerLogin: currentUser.login,
+        name,
+        description,
+        videoIds: []
+      });
+      savePlaylists();
+      closeCreatePlaylistModal();
+      renderPlaylists();
+      showNotice("Плейлист создан.");
+    }
+
+    function deletePlaylist(id){
+      if(!confirm("Удалить плейлист?")) return;
+      playlists = playlists.filter(p => p.id !== id);
+      savePlaylists();
+      renderPlaylists();
+      showNotice("Плейлист удалён.");
+    }
+
+    function openAddToPlaylistModal(){
+      if(!currentUser.loggedIn){
+        showNotice("Сначала войдите.");
+        openAuthModal();
+        return;
+      }
+      const myPlaylists = playlists.filter(p => p.ownerLogin === currentUser.login);
+      $("addToPlaylistList").innerHTML = !myPlaylists.length
+        ? `
+          <div class="empty">У вас нет плейлистов.</div>
+          <div class="row" style="margin-top:10px;">
+            <button class="btn btn-primary" onclick="closeAddToPlaylistModal(); openCreatePlaylistModal();">Создать плейлист</button>
+          </div>
+        `
+        : myPlaylists.map(pl => {
+          const added = pl.videoIds.includes(currentVideoId);
+          return `
+            <div class="list-item">
+              <div>
+                <div style="font-weight:700;">${escapeHtml(pl.name)}</div>
+                <div class="meta">${escapeHtml(pl.description || "Без описания")}</div>
+              </div>
+              <button class="btn ${added ? '' : 'btn-primary'}" onclick="toggleVideoInPlaylist(${pl.id})">
+                ${added ? "Убрать" : "Добавить"}
+              </button>
+            </div>
+          `;
+        }).join("");
+      $("addToPlaylistModal").classList.add("show");
+    }
+
+    function closeAddToPlaylistModal(){
+      $("addToPlaylistModal").classList.remove("show");
+    }
+
+    function toggleVideoInPlaylist(playlistId){
+      const playlist = playlists.find(p => p.id === playlistId);
+      if(!playlist) return;
+      if(playlist.videoIds.includes(currentVideoId)){
+        playlist.videoIds = playlist.videoIds.filter(id => id !== currentVideoId);
+        showNotice("Видео убрано.");
+      }else{
+        playlist.videoIds.push(currentVideoId);
+        showNotice("Видео добавлено.");
+      }
+      savePlaylists();
+      openAddToPlaylistModal();
+      renderPlaylists();
+    }
+
+    function removeFromPlaylist(playlistId, videoId){
+      const playlist = playlists.find(p => p.id === playlistId);
+      if(!playlist) return;
+      playlist.videoIds = playlist.videoIds.filter(id => id !== videoId);
+      savePlaylists();
+      renderPlaylists();
+      showNotice("Видео убрано.");
+    }
+
+    function renderChannelStats(){
+      if(!currentUser.loggedIn){
+        $("channelStatVideos").textContent = "0";
+        $("channelStatViews").textContent = "0";
+        $("channelStatLikes").textContent = "0";
+        $("channelStatsTopList").innerHTML = `<div class="empty">Войдите в аккаунт.</div>`;
+        return;
+      }
+      const myVideos = videos.filter(v => v.author === currentUser.name);
+      const totalViews = myVideos.reduce((s,v) => s + (v.views || 0), 0);
+      const totalLikes = myVideos.reduce((s,v) => s + (v.likes || 0), 0);
+      $("channelStatVideos").textContent = myVideos.length;
+      $("channelStatViews").textContent = totalViews;
+      $("channelStatLikes").textContent = totalLikes;
+      $("channelStatsTopList").innerHTML = myVideos.length
+        ? sortVideos(myVideos, "views").slice(0,5).map(v => `
+          <div class="list-item">
+            <div>
+              <div style="font-weight:700;">${escapeHtml(v.title)}</div>
+              <div class="meta">Просмотры: ${v.views} • Лайки: ${v.likes}</div>
+            </div>
+            <button class="btn" onclick="openVideo(${v.id})">Открыть</button>
+          </div>
+        `).join("")
+        : `<div class="empty">У канала пока нет видео.</div>`;
+    }
+
+    function renderAdmin(){
+      if(!(currentUser.login === "admin" && currentUser.password === "admin")) return;
+      const users = getAuthUsers();
+      const commentsCount = videos.reduce((sum, v) => {
+        return sum + (v.comments || []).reduce((acc, c) => acc + 1 + ((c.replies || []).length), 0);
+      }, 0);
+      $("adminVideosCount").textContent = videos.length;
+      $("adminUsersCount").textContent = users.length;
+      $("adminCommentsCount").textContent = commentsCount;
+      $("adminVideosList").innerHTML = videos.length
+        ? videos.map(v => `
+          <div class="list-item">
+            <div>
+              <div style="font-weight:700;">${escapeHtml(v.title)}</div>
+              <div class="meta">${escapeHtml(v.author)} • ${v.category} • ${v.views} просмотров</div>
+            </div>
+            <div class="row">
+              <button class="btn" onclick="openVideo(${v.id})">Открыть</button>
+              <button class="btn btn-warning" onclick="openEditVideoModal(${v.id})">Изменить</button>
+              <button class="btn btn-red" onclick="deleteVideo(${v.id})">Удалить</button>
+            </div>
+          </div>
+        `).join("")
+        : `<div class="empty">Видео нет.</div>`;
+    }
+
+    function adminClearAllVideos(){
+      if(!(currentUser.login === "admin" && currentUser.password === "admin")) return;
+      if(!confirm("Удалить все видео?")) return;
+      videos = [];
+      saveVideos();
+      renderHomeVideos();
+      renderTrending();
+      renderProfile();
+      renderAdmin();
+      showNotice("Все видео удалены.");
+    }
+
+    function adminClearAllComments(){
+      if(!(currentUser.login === "admin" && currentUser.password === "admin")) return;
+      if(!confirm("Удалить все комментарии?")) return;
+      videos.forEach(v => v.comments = []);
+      saveVideos();
+      renderComments();
+      renderAdmin();
+      showNotice("Все комментарии удалены.");
+    }
+
+    function renderSettings(){
+      $("themeSwitch").checked = document.body.classList.contains("light");
+    }
+
+    function toggleTheme(){
+      applyTheme(document.body.classList.contains("light") ? "dark" : "light");
+      renderSettings();
+    }
+
+    function toggleThemeFromSettings(){
+      applyTheme($("themeSwitch").checked ? "light" : "dark");
+    }
+
+    function applyTheme(theme){
+      document.body.classList.toggle("light", theme === "light");
+      localStorage.setItem(STORAGE_KEYS.theme, theme);
+      $("themeBtn").innerHTML = theme === "light"
+        ? `<span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span>`
+        : `<span class="icon"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></span>`;
+    }
+
+    function openAuthModal(){
+      $("authModal").classList.add("show");
+      $("authName").value = currentUser.loggedIn ? currentUser.name : "";
+      $("authLogin").value = currentUser.loggedIn ? currentUser.login : "";
+      $("authPassword").value = "";
+    }
+
+    function closeAuthModal(){ $("authModal").classList.remove("show"); }
+
+    function registerUser(){
+      const name = $("authName").value.trim();
+      const login = $("authLogin").value.trim();
+      const password = $("authPassword").value.trim();
+      if(!name || !login || !password){
+        showNotice("Заполните все поля.");
+        return;
+      }
+      const users = getAuthUsers();
+      if(users.some(u => u.login === login)){
+        showNotice("Такой логин уже существует.");
+        return;
+      }
+      const user = {
+        name,
+        login,
+        password,
+        avatar: getInitials(name),
+        avatarType: "text",
+        loggedIn: true,
+        subscriptions: [],
+        likedVideos: []
+      };
+      users.push(user);
+      setAuthUsers(users);
+      currentUser = user;
+      saveCurrentUser();
+      renderProfile();
+      renderSubscriptionsFeed();
+      closeAuthModal();
+      showNotice("Регистрация успешна.");
+    }
+
+    function loginUser(){
+      const login = $("authLogin").value.trim();
+      const password = $("authPassword").value.trim();
+      if(!login || !password){
+        showNotice("Введите логин и пароль.");
+        return;
+      }
+      const user = getAuthUsers().find(u => u.login === login && u.password === password);
+      if(!user){
+        showNotice("Неверный логин или пароль.");
+        return;
+      }
+      currentUser = { ...user, loggedIn:true };
+      saveCurrentUser();
+      renderProfile();
+      renderSubscriptionsFeed();
+      renderPlaylists();
+      renderAdmin();
+      closeAuthModal();
+      showNotice("Вход выполнен.");
+    }
+
+    function logout(){
+      currentUser = {
+        name: "Гость",
+        login: "@guest",
+        avatar: "Г",
+        avatarType: "text",
+        password: "",
+        loggedIn: false,
+        subscriptions: [],
+        likedVideos: []
+      };
+      saveCurrentUser();
+      renderProfile();
+      renderSubscriptionsFeed();
+      renderPlaylists();
+      $("adminNavBtn").style.display = "none";
+      showNotice("Вы вышли.");
+    }
+
+    function openEditProfileModal(){
+      if(!currentUser.loggedIn){
+        showNotice("Сначала войдите.");
+        openAuthModal();
+        return;
+      }
+      $("editName").value = currentUser.name;
+      $("editLogin").value = currentUser.login;
+      $("editPassword").value = "";
+      $("editAvatarFile").value = "";
+      $("editProfileModal").classList.add("show");
+    }
+
+    function closeEditProfileModal(){
+      $("editProfileModal").classList.remove("show");
+    }
+
+    function saveProfileChanges(){
+      if(!currentUser.loggedIn) return;
+      const newName = $("editName").value.trim();
+      const newLogin = $("editLogin").value.trim();
+      const newPassword = $("editPassword").value.trim();
+      const avatarFile = $("editAvatarFile").files[0];
+
+      if(!newName || !newLogin){
+        showNotice("Имя и логин не должны быть пустыми.");
+        return;
+      }
+      const users = getAuthUsers();
+      const loginBusy = users.some(u => u.login === newLogin && u.login !== currentUser.login);
+      if(loginBusy){
+        showNotice("Этот логин уже занят.");
+        return;
+      }
+
+      const oldName = currentUser.name;
+      const oldLogin = currentUser.login;
+
+      currentUser.name = newName;
+      currentUser.login = newLogin;
+      if(newPassword) currentUser.password = newPassword;
+
+      if(avatarFile){
+        currentUser.avatar = URL.createObjectURL(avatarFile);
+        currentUser.avatarType = "image";
+      }else if(currentUser.avatarType !== "image"){
+        currentUser.avatar = getInitials(newName);
+        currentUser.avatarType = "text";
+      }
+
+      videos.forEach(video => {
+        if(video.author === oldName) video.author = newName;
+        (video.comments || []).forEach(c => {
+          if(c.user === oldName){
+            c.user = newName;
+            c.avatar = currentUser.avatar;
+            c.avatarType = currentUser.avatarType;
+          }
+          (c.replies || []).forEach(r => {
+            if(r.user === oldName){
+              r.user = newName;
+              r.avatar = currentUser.avatar;
+              r.avatarType = currentUser.avatarType;
+            }
+          });
+        });
+      });
+
+      playlists.forEach(pl => {
+        if(pl.ownerLogin === oldLogin) pl.ownerLogin = newLogin;
+      });
+
+      const updatedUsers = users.map(u => u.login === oldLogin ? { ...currentUser } : u);
+      setAuthUsers(updatedUsers);
+
+      saveCurrentUser();
+      saveVideos();
+      savePlaylists();
+
+      renderProfile();
+      renderHomeVideos();
+      renderSubscriptionsFeed();
+      renderPlaylists();
+      renderTrending();
+      renderHistory();
+      renderFavorites();
+      renderChannelStats();
+      renderAdmin();
+
+      closeEditProfileModal();
+      showNotice("Профиль обновлён.");
+    }
+
+    function performSearch(){
+      currentSearch = $("searchInput").value.trim();
+      showView("home");
+      renderHomeVideos();
+    }
+
+    function filterByCategory(category, chipEl = null){
+      currentFilter = category;
+      showView("home");
+      renderHomeVideos();
+      document.querySelectorAll(".chip").forEach(chip => chip.classList.remove("active"));
+      if(chipEl) chipEl.classList.add("active");
+      else{
+        document.querySelectorAll(".chip").forEach(chip => {
+          chip.classList.toggle("active", chip.textContent.trim() === category);
+        });
+      }
+    }
+
+    function showView(name, navEl = null){
+      document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+      const target = $(`view-${name}`);
+      if(target) target.classList.add("active");
+
+      document.querySelectorAll(".nav-item[data-view]").forEach(i => i.classList.remove("active"));
+      if(navEl && navEl.dataset.view) navEl.classList.add("active");
+      else{
+        const linked = document.querySelector(`.nav-item[data-view="${name}"]`);
+        if(linked) linked.classList.add("active");
+      }
+
+      if(name === "home") renderHomeVideos();
+      if(name === "profile") renderProfile();
+      if(name === "subscriptions") renderSubscriptionsFeed();
+      if(name === "playlists") renderPlaylists();
+      if(name === "trending") renderTrending();
+      if(name === "settings") renderSettings();
+      if(name === "history") renderHistory();
+      if(name === "favorites") renderFavorites();
+      if(name === "upload") loadDraftIntoForm();
+      if(name === "stats") renderChannelStats();
+      if(name === "admin") renderAdmin();
+
+      closeSidebar();
+    }
+
+    function goHome(){ showView("home"); }
+
+    function showNotice(text){
+      const n = $("notice");
+      n.textContent = text;
+      n.classList.add("show");
+      clearTimeout(showNotice.timer);
+      showNotice.timer = setTimeout(() => n.classList.remove("show"), 2600);
+    }
+
+    function toggleSidebar(){
+      $("sidebar").classList.toggle("open");
+      $("mobileOverlay").classList.toggle("show");
+    }
+
+    function closeSidebar(){
+      $("sidebar").classList.remove("open");
+      $("mobileOverlay").classList.remove("show");
+    }
+
+    document.addEventListener("input", (e) => {
+      const ids = ["uploadTitle","uploadAuthor","uploadCategory","uploadThumb","uploadVideoUrl","uploadDescription"];
+      if(ids.includes(e.target.id)){
+        saveUploadDraft();
+        updateUploadPreview();
+      }
+    });
+
+    $("uploadLocalVideo").addEventListener("change", updateUploadPreview);
+    $("uploadLocalThumb").addEventListener("change", updateUploadPreview);
+    $("burgerBtn").addEventListener("click", toggleSidebar);
+    $("searchInput").addEventListener("keydown", (e) => {
+      if(e.key === "Enter") performSearch();
+    });
+
+    loadData();
+    renderHomeVideos();
+    renderProfile();
+    renderPlaylists();
+    renderTrending();
+    renderSettings();
+    renderHistory();
+    renderFavorites();
+    renderChannelStats();
+    loadDraftIntoForm();
+  </script>
 </body>
 </html>
